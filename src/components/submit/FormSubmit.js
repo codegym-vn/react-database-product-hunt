@@ -15,6 +15,10 @@ class FormSubmit extends Component {
 
     _handleOnSubmit = () => {
         this.props.onSubmit(this.state.name)
+        
+        this.setState({
+            name: ''
+        })
     }
 
     render() {
@@ -24,12 +28,13 @@ class FormSubmit extends Component {
             <View style={styles.container}>
                 <View>
                     <TextInput
+                        style={styles.textInput}
                         placeholder='Product name'
                         returnKeyType='done'
                         onChangeText={this._handleChangeText}
                         value={name}/>
 
-                    <Button title='Submit now' onPress={this._handleOnSubmit}/>
+                    <Button title='Submit' onPress={this._handleOnSubmit}/>
                 </View>
             </View>
         )
@@ -37,7 +42,16 @@ class FormSubmit extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {}
+    container: {},
+
+    textInput: {
+        borderWidth: 1,
+        borderColor: '#333',
+        fontSize: 16,
+        padding: 10,
+        minWidth: '80%',
+        marginBottom: 10,
+    }
 })
 
 FormSubmit.propTypes = {

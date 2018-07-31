@@ -8,7 +8,8 @@ import {
     unsubscribeAuthentication
 } from "../services/AuthServices"
 import WelcomeMessage from "./home/WelcomeMessage"
-import LogoutButton from "./home/LogoutButton"
+import {getListProducts, voteProduct} from "../services/RealtimeServices"
+import ListProducts from "./home/ListProducts"
 
 class HomeStack extends Component {
     static navigationOptions = {
@@ -24,11 +25,36 @@ class HomeStack extends Component {
 
     state = {
         isAuthenticated: isAuthenticated(),
-        user: getCurrentUser()
+        user: getCurrentUser(),
+        products: []
     }
 
     componentDidMount() {
         subscribeAuthentication(this._handleOnChangeAuth)
+        getListProducts().on('value', this._handleChangeProducts)
+    }
+
+    _handleChangeProducts = snapshot => {
+        const products = this._parseObjectProducts(snapshot)
+
+        this.setState({
+            products
+        })
+    }
+
+    _parseObjectProducts = (snapshot) => {
+        const products = []
+
+        snapshot.forEach(child => {
+            products.push({
+                vote: 0,
+                name: '',
+                key: child.key,
+                ...child.val()
+            })
+        })
+
+        return products
     }
 
     componentWillUnmount() {
@@ -42,16 +68,18 @@ class HomeStack extends Component {
         })
     }
 
+    _handleUpVote = (key, vote) => {
+        voteProduct(key, vote)
+    }
+
     render() {
-        const {isAuthenticated} = this.state
+        const {products} = this.state
 
         return (
             <View style={styles.container}>
                 <WelcomeMessage {...this.state}/>
 
-                {
-                    isAuthenticated && <LogoutButton/>
-                }
+                <ListProducts onUpVote={this._handleUpVote} products={products}/>
             </View>
         )
     }
@@ -61,9 +89,6 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         minHeight: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     }
 })
 
