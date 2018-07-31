@@ -6,8 +6,8 @@ import {loginSuccess} from "../../services/AuthServices"
 
 class LoginForm extends Component {
     state = {
-        email: '',
-        password: ''
+        email: 'tutv95@gmail.com',
+        password: '123456'
     }
 
     _handleTextInputChange = (field) => (value) => {

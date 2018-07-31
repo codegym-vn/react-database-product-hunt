@@ -1,3 +1,5 @@
+import {getToken, getUserData, saveAuthData} from "./StorageServices"
+
 const _store = {
     isAuthenticated: false,
     user: {},
@@ -8,22 +10,33 @@ const _store = {
     subscribers: []
 }
 
-export const logout = () => {
-    _store.isAuthenticated = false;
-    _store.user = {}
-
-    _broadcast()
+export const _getIsAuthenticatedByToken = token => {
+    return !(!token || typeof token !== 'object' || Object.keys(token).length < 2 || !token.hasOwnProperty('accessToken'))
 }
 
-export const loginSuccess = ({user, token}) => {
+export const _change = ({user = {}, token = null}) => {
+    const isAuthenticated = _getIsAuthenticatedByToken(token)
+
     _store.user = {
         ...user
     }
     _store.token = {
         ...token
     }
-    _store.isAuthenticated = true
+    _store.isAuthenticated = isAuthenticated
     _broadcast()
+
+    return Promise.resolve(isAuthenticated)
+}
+
+export const logout = () => {
+    _change({})
+    saveAuthData({})
+}
+
+export const loginSuccess = ({user, token}) => {
+    _change({user, token})
+    saveAuthData({user, token})
 
     return Promise.resolve(true)
 }
@@ -31,6 +44,21 @@ export const loginSuccess = ({user, token}) => {
 const _broadcast = () => {
     _store.subscribers.forEach(subscriber => {
         typeof subscriber === 'function' && subscriber(_store.user)
+    })
+}
+
+export const bootstrapAuth = () => {
+    return Promise.all([
+        getToken(),
+        getUserData()
+    ]).then(([token, user]) => {
+        const isAuthenticated = _getIsAuthenticatedByToken(token)
+
+        if (isAuthenticated) {
+            return _change({user, token})
+        }
+
+        return Promise.resolve(isAuthenticated)
     })
 }
 

@@ -10,7 +10,7 @@ import {
 import WelcomeMessage from "./home/WelcomeMessage"
 import LogoutButton from "./home/LogoutButton"
 
-class HomePage extends Component {
+class HomeStack extends Component {
     static navigationOptions = {
         title: 'Home',
         headerStyle: {
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
 
 export default createStackNavigator({
     Home: {
-        screen: HomePage
+        screen: HomeStack
     },
 })

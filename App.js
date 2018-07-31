@@ -1,42 +1,16 @@
 import React from 'react'
-import {Image} from 'react-native'
-import {createBottomTabNavigator} from 'react-navigation'
-import HomePage from './src/components/HomePage'
-import Ionicons from "react-native-vector-icons/Ionicons"
-import Logo from './src/assets/images/logo.png'
-import AccountPage from "./src/components/AccountPage"
-import SubmitProductPage from "./src/components/SubmitProductPage"
+import {createSwitchNavigator} from 'react-navigation'
+import AppStack from "./src/components/AppStack"
+import AuthLoading from "./src/components/AuthLoading"
+import AuthStack from "./src/components/AuthStack"
 
-const iconMap = {
-    Home: 'ios-home',
-    Account: 'ios-unlock',
-    Submit: 'ios-paper-plane'
-}
-
-export default createBottomTabNavigator(
+export default createSwitchNavigator(
     {
-        Account: AccountPage,
-        Home: HomePage,
-        Submit: SubmitProductPage
+        AuthLoading: AuthLoading,
+        App: AppStack,
+        Auth: AuthStack,
     },
     {
-        navigationOptions: ({navigation}) => ({
-            tabBarIcon: ({focused, tintColor}) => {
-                const {routeName} = navigation.state
-                const iconName = iconMap[routeName] || 'ios-information'
-
-                if (routeName === 'Home') {
-                    return <Image
-                        style={{width: 20, height: 20}}
-                        source={Logo}/>
-                }
-
-                return <Ionicons name={iconName} size={25} color={tintColor}/>;
-            },
-        }),
-        tabBarOptions: {
-            activeTintColor: '#da552f',
-            inactiveTintColor: '#999',
-        },
+        initialRouteName: 'AuthLoading'
     }
 )

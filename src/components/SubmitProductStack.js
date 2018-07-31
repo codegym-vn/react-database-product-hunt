@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
 import {View, Text} from 'react-native'
+import PropTypes from 'prop-types'
 import {createStackNavigator} from 'react-navigation'
+import FormSubmit from "./submit/FormSubmit"
+import withAuthentication from "./shared/withAuthentication"
 
-class SubmitProductPage extends Component {
+class SubmitProductStack extends Component {
     static navigationOptions = {
         title: 'Submit',
         headerStyle: {
@@ -14,17 +17,29 @@ class SubmitProductPage extends Component {
         }
     }
 
+    _handleOnSubmit = name => {
+
+    }
+
     render() {
         return (
             <View>
                 <Text>Submit product</Text>
+
+                <FormSubmit onSubmit={this._handleOnSubmit}/>
             </View>
         )
     }
 }
 
+SubmitProductStack.propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired,
+}
+
 export default createStackNavigator({
     Submit: {
-        screen: SubmitProductPage
+        screen: withAuthentication(SubmitProductStack)
     },
 })
