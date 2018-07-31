@@ -10,23 +10,24 @@ class WelcomeMessage extends Component {
 
         return (
             <View style={styles.container}>
-                <View>
-                    {
-                        isAuthenticated ? <Text>Hello {name}</Text>
-                            : <Text>Hello Guest</Text>
-                    }
+                {
+                    isAuthenticated ? <Text>Hello {name}</Text>
+                        : <Text>Hello Guest</Text>
+                }
 
-                    {
-                        isAuthenticated && <LogoutButton/>
-                    }
-                </View>
+                {
+                    isAuthenticated && <LogoutButton/>
+                }
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {}
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    }
 })
 
 WelcomeMessage.propTypes = {

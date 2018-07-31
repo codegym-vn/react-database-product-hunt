@@ -54,7 +54,7 @@ class HomeStack extends Component {
             })
         })
 
-        return products
+        return products.reverse()
     }
 
     componentWillUnmount() {

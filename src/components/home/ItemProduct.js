@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     meta: {
         fontSize: 12,
         color: '#999',
-        marginBottom: 20,
+        marginBottom: 10,
     },
 
     right: {},
