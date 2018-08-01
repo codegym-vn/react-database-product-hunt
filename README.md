@@ -22,4 +22,4 @@
 
 ![Register](/demo/register.jpeg)
 
-![Home page](/demo/home.jpeg)
+![Home page](/demo/home.jpg)
