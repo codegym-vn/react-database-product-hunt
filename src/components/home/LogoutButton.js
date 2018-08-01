@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Button, StyleSheet} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
 import {logout} from "../../services/AuthServices"
 
 class LogoutButton extends Component {
@@ -9,16 +9,22 @@ class LogoutButton extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Button color='#999' title='Logout' onPress={this._handlePressLogout}/>
-            </View>
+            <TouchableOpacity onPress={this._handlePressLogout}>
+                <View style={styles.container}>
+                    <Text style={styles.text}>Logout</Text>
+                </View>
+            </TouchableOpacity>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
+        paddingRight: 12,
+    },
 
+    text: {
+        color: '#333'
     }
 })
 

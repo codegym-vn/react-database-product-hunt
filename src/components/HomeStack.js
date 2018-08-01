@@ -34,6 +34,17 @@ class HomeStack extends Component {
         getListProducts().on('value', this._handleChangeProducts)
     }
 
+    componentDidUpdate(prevProp, prevState) {
+        if (!this.state.isAuthenticated) {
+            return this.props.navigation.navigate('Auth')
+        }
+    }
+
+    componentWillUnmount() {
+        unsubscribeAuthentication(this._handleOnChangeAuth)
+        getListProducts().off(this._handleChangeProducts)
+    }
+
     _handleChangeProducts = snapshot => {
         const products = this._parseObjectProducts(snapshot)
 
@@ -57,9 +68,6 @@ class HomeStack extends Component {
         return products.reverse()
     }
 
-    componentWillUnmount() {
-        unsubscribeAuthentication(this._handleOnChangeAuth)
-    }
 
     _handleOnChangeAuth = () => {
         this.setState({

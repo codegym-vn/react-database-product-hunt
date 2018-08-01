@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, Alert, StyleSheet} from 'react-native'
 import PropTypes from 'prop-types'
 import {createStackNavigator} from 'react-navigation'
 import FormSubmit from "./submit/FormSubmit"
@@ -23,6 +23,11 @@ class SubmitProductStack extends Component {
             .then(() => {
                 this.props.navigation.navigate('Home')
             })
+            .catch((error => {
+                const message = error.message || 'Something went wrong'
+
+                Alert.alert(message)
+            }))
     }
 
     render() {

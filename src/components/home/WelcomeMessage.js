@@ -8,12 +8,11 @@ class WelcomeMessage extends Component {
         const {isAuthenticated, user} = this.props
         const name = user.displayName || user.email
 
+        const welcomeText = isAuthenticated ? `Hello ${name}` : `Hello Guest`
+
         return (
             <View style={styles.container}>
-                {
-                    isAuthenticated ? <Text>Hello {name}</Text>
-                        : <Text>Hello Guest</Text>
-                }
+                <Text style={styles.welcome}>{welcomeText}</Text>
 
                 {
                     isAuthenticated && <LogoutButton/>
@@ -26,8 +25,17 @@ class WelcomeMessage extends Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
-    }
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
+
+    welcome: {
+        paddingLeft: 12,
+        fontSize: 14,
+        color: '#333'
+    },
 })
 
 WelcomeMessage.propTypes = {
