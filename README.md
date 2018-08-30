@@ -2,7 +2,10 @@
 
 ## Firebase
 
-Mã nguồn Sử dụng Firebase để xây dựng chức năng đăng ký, đăng nhập được sử dụng để thực hành tại [CodeGym](https://codegym.vn) 
+Mã nguồn Sử dụng Firebase được sử dụng để thực hành tại [CodeGym](https://codegym.vn) 
+
+<br/>
+<br/>
 Đăng kí tài khoản firebase sau đó tạo 1 project và copy config vào file: `src/config/firebase.json` như sau:
 ```
 {
